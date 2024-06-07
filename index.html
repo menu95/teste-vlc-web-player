@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video.js Player</title>
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+</head>
+<body>
+    <video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
+           poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+        <source src="https://8mwx.short.gy/GLOBORJ/index.m3u8" type="application/x-mpegURL" />
+    </video>
+    <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.0.0/hls.min.js"></script>
+    <script>
+        var video = document.getElementById('my-video');
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource('https://8mwx.short.gy/GLOBORJ/index.m3u8');
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = 'https://8mwx.short.gy/GLOBORJ/index.m3u8';
+            video.addEventListener('canplay', function () {
+                video.play();
+            });
+        }
+    </script>
+</body>
+</html>
